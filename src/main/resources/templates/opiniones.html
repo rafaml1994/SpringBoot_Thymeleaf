@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <link th:href="@{/style.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="banner">
+    <h1>Bienvenido a nuestra foro</h1>
+    <p>En esta app podrás ver las reseñas sobre películas de otras personas o bien puedes registrarte y añadir tu la tuya</p>
+</div>
+<nav>
+    <ul>
+        <li><a th:href="@{/volverInicio}">Inicio</a></li>
+        <li th:if="${login!=null}" ><a th:href="@{/cerrarSesion}">Cerrar Sesión</a></li>
+    </ul>
+</nav>
+<div th:if="${login==null}">
+    <div class="gallery js-flickity" data-flickity='{ "wrapAround": true, "autoPlay": true }'>
+        <th:block th:each="usuario : ${listaUsuarios}">
+            <div class="gallery-cell" th:each="recomendaciones : ${usuario.getOpiniones()}">
+                <div class="opiniones">
+                    <h3>
+                        <span>"</span>
+                        <span th:text="${usuario.getUsuario()}"></span>
+                        <span>"</span>
+                    </h3>
+                    <li th:text="${recomendaciones}">
+                    </li>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</div>
+<div th:if="${login!=null}" class="register">
+    <h1>Bienvenido <span th:text="${user}"></span></h1>
+    <div>
+        <form action="/modificarOpiniones" th:object="${opinion}" method="post">
+            <div th:each="opinion : ${arrayOpiniones}">
+                    <textarea th:text="${opinion}" type="text" name="textarea" rows="15" cols="80" th:value="${opinion}"></textarea>
+            </div>
+            <button type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Editar
+            </button>
+        </form>
+    </div>
+    <div>
+        <form action="/insertarOpiniones" th:object="${textarea}" method="post">
+            <textarea type="text" name="textarea" rows="15" cols="80" th:value="${textarea}"></textarea>
+            <br>
+            <button>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Publicar
+            </button>
+        </form>
+    </div>
+</div>
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+</body>
+</html>

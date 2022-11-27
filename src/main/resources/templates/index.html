@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/style.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="banner">
+    <h1>Bienvenido a nuestra foro</h1>
+    <p>En esta app podrás ver las reseñas sobre películas de otras personas o bien puedes registrarte y añadir tu la tuya</p>
+</div>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/registro}" th:if="${login==null}">Registrate</a></li>
+        <li><a th:href="@{/login}" th:if="${login==null}">Iniciar sesión</a></li>
+        <li><a th:href="@{/opiniones}">Ver reseñas</a></li>
+    </ul>
+</nav>
+<div class="textResponse" th:if="${texto!=null}">
+    <h3 th:text="${texto}">¡Registrado con exito!</h3>
+    <p >Ahora inicia sesión</p>
+</div>
+</body>
+</html>
